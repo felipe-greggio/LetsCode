@@ -10,12 +10,16 @@ public class Master {
         Product pasta = new Product("Macarrão", "Massas", "Integral", 50, "Renata");
         Product pasta2 = new Product("Macarrão", "Massas", "Ovos", 100, "Renata");
         stock.addProduct(pasta);
-        stock.addProduct(pasta2);
+
         stock.listProducts();
+        stock.addProduct(pasta2);
         System.out.println();
+        stock.listProducts();
         stock.removeProduct(1);
+        System.out.println();
         stock.listProducts();
         stock.updateProduct(2,"Macarrão", "Massas", "Integral", 150, "Barilla");
+        System.out.println();
         System.out.println();
         stock.readProduct(2);
 

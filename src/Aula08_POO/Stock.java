@@ -21,6 +21,8 @@ public class Stock {
     }
 
     public void listProducts(){
+        if (products.isEmpty())
+            System.out.println("Não há produtos cadastrados na lista");
         for (Product p : products){
             System.out.println(p.toString());
         }
@@ -40,8 +42,8 @@ public class Stock {
 
     public void addProduct(Product product){
         for (Product p : products) {
-            if ((p.name == product.name) && (p.brand == product.brand)) {
-                p.quantity += product.quantity;
+            if ((p.getName() == product.getName()) && (p.getBrand() == product.getBrand())) {
+                p.setQuantity(p.getQuantity()+ product.getQuantity());
                 return;
             }
         }
@@ -62,11 +64,11 @@ public class Stock {
     public void updateProduct(int productId, String name, String aisle, String kind, int quantity, String brand){
         for(Product p : products){
             if (p.getProductId() == productId){
-                p.name = name;
-                p.aisle = aisle;
-                p.kind = kind;
-                p.quantity = quantity;
-                p.brand = brand;
+                p.setName(name);
+                p.setAisle(aisle);
+                p.setKind(kind);
+                p.setQuantity(quantity);
+                p.setBrand(brand);
             }
         }
     }
