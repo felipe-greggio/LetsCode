@@ -33,6 +33,7 @@ public abstract class HeroiGenerico {
     public abstract void atacarMonstro(Monstro monstro);
     public abstract void meditar();
     public abstract void recuperarCompletamente();
+    public abstract  void aumentarDano();
 
     public abstract void incrementarMonstrosDerrotados();
     public abstract int getMonstrosDerrotados();

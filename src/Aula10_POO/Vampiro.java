@@ -7,19 +7,19 @@ public class Vampiro extends Generico{
     Random random = new Random();
 
     public Vampiro(){
-        this.hitPoints = 180;
-        this.dano = 20;
+        this.hitPoints = 400;
+        this.dano = 25;
         this.vivo = true;
     }
 
 
     public void ataque(HeroiGenerico heroi) {
         int chanceSangramento = 0;
-        System.out.println("O vampiro lhe causou 20 de dano.");
-        heroi.sofrerDano(20);
+        System.out.println("O gigante lhe causou "+this.dano+" pontos de dano.");
+        heroi.sofrerDano(this.dano);
         chanceSangramento = random.nextInt(100);
         if(chanceSangramento>=50 && heroi.isSangrando()==false){
-            System.out.println("O vampiro lhe corta a jugular, você sente algo quente escorrendo por sua armadura. \nVocê está sangrando");
+            System.out.println("O vampiro lhe corta a jugular, você sente algo quente escorrendo por sua armadura. \nVocê está sangrando.");
             heroi.setSangrando(true);
             heroi.setContadorSangrando(3);
         }
@@ -27,18 +27,20 @@ public class Vampiro extends Generico{
 
 
     public void apanhar(HeroiGenerico heroi) {
-        int dano = heroi.getDano() - random.nextInt(39);
-        if(heroi.getTipoDano().equals("Perfurante"))
-            dano = dano*2;
-        System.out.println("O monstro recebeu "+dano+" pontos de dano.");
+        int dano = heroi.getDano() - random.nextInt(19);
+        if(heroi.getTipoDano().equals("Perfurante")){
+            System.out.println("Este monstro é fraco contra o elemento do ar.");
+            dano = dano * 2;
+        }
+        System.out.println("O vampiro recebeu "+dano+" pontos de dano.");
         this.hitPoints = this.hitPoints-dano;
         if (this.hitPoints<=0){
-            System.out.println("Com um rápido golpe de sua arma, você degola o vampiro, sangue se espalha por seu rosto. \nVocê derrotou o vampiro");
+            System.out.println("Com um rápido golpe de sua arma, você degola o vampiro, sangue se espalha por seu rosto. \nVocê derrotou o vampiro.");
             this.vivo = false;
             heroi.incrementarMonstrosDerrotados();
         }
         else{
-            System.out.println("Ele ainda tem "+this.hitPoints+" pontos de vida");
+            System.out.println("Ele ainda tem "+this.hitPoints+" pontos de vida.");
         }
     }
 

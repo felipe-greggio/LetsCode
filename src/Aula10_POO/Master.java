@@ -28,15 +28,16 @@ public class Master {
         for(Generico monstro: listaMonstros){
             monstro.apresentarMonstro();
             Jogo.batalha(heroi, monstro);
+            if(heroi.isVivo()==false) {
+                break;
+            }
             batalhas++;
-            if(batalhas%2==0){
+            if(batalhas%2==0 && batalhas<4){
                 Jogo.fogueira(heroi);
             }
         }
-        if (heroi.getMonstrosDerrotados()==4){
+        if (heroi.isVivo()){
             heroi.setVencedor(true);
-        }
-        if (heroi.isVencedor()==true){
             Jogo.ganhouJogo();
         }
         else{

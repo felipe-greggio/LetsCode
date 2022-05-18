@@ -11,8 +11,8 @@ public class Generico extends Monstro{
     protected boolean vivo;
 
     public Generico(){
-        this.hitPoints = 100;
-        this.dano = 10;
+        this.hitPoints = 200;
+        this.dano = 15;
         this.vivo = true;
     }
 
@@ -26,22 +26,22 @@ public class Generico extends Monstro{
 
     @Override
     public void ataque(HeroiGenerico heroi){
-        System.out.println("O monstro lhe causou 10 de dano.");
-        heroi.sofrerDano(10);
+        System.out.println("O monstro lhe causou "+this.dano+" pontos de dano.");
+        heroi.sofrerDano(this.dano);
     }
 
     @Override
        public void apanhar(HeroiGenerico heroi) {
-        int dano = heroi.getDano() - random.nextInt(39);
+        int dano = heroi.getDano() - random.nextInt(19);
         System.out.println("O monstro recebeu "+dano+" pontos de dano.");
         this.hitPoints = this.hitPoints-dano;
         if (this.hitPoints<=0){
-            System.out.println("Com um rápido golpe de sua arma, você degola este monstro sem compreender de fato o que ele era. \nVocê derrotou o monstro e continua em sua aventura");
+            System.out.println("Com um rápido golpe de sua arma, você degola este monstro sem compreender de fato o que ele era. \nVocê derrotou o monstro e continua em sua aventura.");
             this.vivo = false;
             heroi.incrementarMonstrosDerrotados();
         }
         else{
-            System.out.println("Ele ainda tem "+this.hitPoints+" pontos de vida");
+            System.out.println("Ele ainda tem "+this.hitPoints+" pontos de vida.");
         }
     }
 

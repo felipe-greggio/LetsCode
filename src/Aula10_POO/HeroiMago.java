@@ -3,14 +3,16 @@ package Aula10_POO;
 import java.io.*;
 import java.util.Scanner;
 
-public class HeroiBarbaro extends HeroiGenerico {
+public class HeroiMago extends HeroiGenerico {
+
+
 
     Scanner scan = new Scanner(System.in);
 
-    public HeroiBarbaro(){
-        this.hitPoints = 300;
-        this.magicPoints = 50;
-        this.dano = 55;
+    public HeroiMago(){
+        this.hitPoints = 120;
+        this.magicPoints = 200;
+        this.dano = 30;
         this.contadorEnvenenado = 0;
         this.contadorSangrando = 0;
         this.contadorAtordoado = 0;
@@ -65,7 +67,7 @@ public class HeroiBarbaro extends HeroiGenerico {
         this.envenenado = envenenado;
     }
     public void setContadorEnvenenado(int contadorEnvenenado) {
-        this.contadorEnvenenado = contadorEnvenenado;
+        this.contadorEnvenenado = contadorEnvenenado-2;
     }
 
     public boolean isSangrando() {
@@ -75,7 +77,7 @@ public class HeroiBarbaro extends HeroiGenerico {
         this.sangrando = sangrando;
     }
     public void setContadorSangrando(int contadorSangrando) {
-        this.contadorSangrando = contadorSangrando;
+        this.contadorSangrando = contadorSangrando-2;
     }
 
     public boolean isAtordoado() {
@@ -96,28 +98,28 @@ public class HeroiBarbaro extends HeroiGenerico {
     }
 
     public void setElementoDano(String elemento){
-        this.elementoDano = Elemento.valueOf(elemento);
-        if(elementoDano.equals(Elemento.FOGO)){
+        this.elementoDano = HeroiGenerico.Elemento.valueOf(elemento);
+        if(elementoDano.equals(HeroiGenerico.Elemento.FOGO)){
             this.tipoDano = "Fogo";
         }
-        else if(elementoDano.equals(Elemento.AR)){
+        else if(elementoDano.equals(HeroiGenerico.Elemento.AR)){
             this.tipoDano = "Perfurante";
         }
-        else if(elementoDano.equals(Elemento.TERRA)){
+        else if(elementoDano.equals(HeroiGenerico.Elemento.TERRA)){
             this.tipoDano = "Pancada";
         }
-        else if(elementoDano.equals(Elemento.AGUA)){
+        else if(elementoDano.equals(HeroiGenerico.Elemento.AGUA)){
             this.hitPoints = this.hitPoints +50;
             this.tipoDano = "Aquático";
         }
     }
 
     public void atacarMonstro(Monstro monstro){
-        String[] listaAtaques ={"Ataque Normal","Machado Atômico - 8MP", "Investida Furiosa - 12MP"};
+        String[] listaAtaques ={"Ataque Normal","Orbe da dor - 10 MP", "Horror Cósmico - 18 MP", "Curar - 6 MP"};
         int opcao = 0;
         while(true){
             System.out.println();
-            System.out.println("Escolha seu ataque: \n1- "+listaAtaques[0]+"\n2- "+listaAtaques[1]+"\n3- "+listaAtaques[2]);
+            System.out.println("Escolha seu ataque: \n1- "+listaAtaques[0]+"\n2- "+listaAtaques[1]+"\n3- "+listaAtaques[2]+"\n4- "+listaAtaques[3]);
             opcao = scan.nextInt();
             scan.nextLine();
             if (opcao ==1){
@@ -126,30 +128,39 @@ public class HeroiBarbaro extends HeroiGenerico {
                 break;
             }
             else if (opcao==2){
-                if(this.magicPoints<8){
+                if(this.magicPoints<7){
                     System.out.println("Você não tem mana suficiente para usar este ataque.");
                     continue;
                 }
                 else{
-                    System.out.println("Você murmura o único feitiço que conhece e lança seu machado em direção ao inimigo. Uma pequena explosão ocorre assim que a arma o acerta.");
-                    this.magicPoints = this.magicPoints-8;
-                    this.dano +=15;
+                    System.out.println("Você sacode um pouco seus braços e lança uma gigantesca orbe em direção ao monstro. Você aparenta estar levemente entediado enquanto ouve os gritos de agonia do monstro.");
+                    this.magicPoints = this.magicPoints-7;
+                    this.dano +=40;
                     monstro.apanhar(this);
-                    this.dano -=15;
+                    this.dano -=40;
                     break;
                 }
             }else if (opcao==3){
-                if(this.magicPoints<12){
+                if(this.magicPoints<14){
                     System.out.println("Você não tem mana suficiente para usar este ataque.");
                     continue;
                 }
                 else{
-                    System.out.println("Enraivecido, você se lança furiosamente em direção ao inimigo, causando grande dano ao monstro e a si mesmo.");
-                    this.magicPoints = this.magicPoints-12;
-                    this.dano +=30;
+                    System.out.println("Você até mesmo se prepara para poder lançar o próximo feitiço, ele é poderoso na mesma proporção que é proibido. \nVocê murmura rapidamente os encantamentos e uma fenda no espaço-tempo se abre, puxando o monstro para dentro, você sente ele gritar de dor e agonizar, conforme seu corpo e mente enfrentam o horror do cosmos.");
+                    this.magicPoints = this.magicPoints-14;
+                    this.dano +=65;
                     monstro.apanhar(this);
-                    this.dano -=30;
-                    sofrerDano(15);
+                    this.dano -=65;
+                    break;
+                }
+            }else if (opcao==4) {
+                if (this.magicPoints < 6) {
+                    System.out.println("Você não tem mana suficiente para se curar.");
+                    continue;
+                } else {
+                    System.out.println("Você recita uma breve incantação e seus ferimentos magicamente vão embora.");
+                    this.magicPoints = this.magicPoints - 6;
+                    this.hitPoints += 40;
                     break;
                 }
             }
@@ -161,11 +172,11 @@ public class HeroiBarbaro extends HeroiGenerico {
         this.magicPoints += Math.round(this.magicPoints/5);
     }
     public void recuperarCompletamente(){
-        this.magicPoints = 50;
-        if(elementoDano.equals(Elemento.AGUA))
-            this.hitPoints = 350;
+        this.magicPoints = 100;
+        if(elementoDano.equals(HeroiGenerico.Elemento.AGUA))
+            this.hitPoints = 250;
         else
-            this.hitPoints = 300;
+            this.hitPoints = 200;
         setAtordoado(false);
         setContadorAtordoado(0);
         setEnvenenado(false);
@@ -175,7 +186,7 @@ public class HeroiBarbaro extends HeroiGenerico {
     }
 
     public void aumentarDano(){
-      this.dano += 10;
+        this.dano += 10;
     }
 
     public void sofrerCondicao(){
@@ -214,7 +225,7 @@ public class HeroiBarbaro extends HeroiGenerico {
             if(this.contadorAtordoado==0){
                 System.out.println("Você parou de ver estrelas e conseguiu se equilibrar novamente, não está mais atordoado!");
                 this.atordoado = false;
-                this.dano = 55;
+                this.dano = 30;
             }
         }
     }
@@ -225,7 +236,7 @@ public class HeroiBarbaro extends HeroiGenerico {
         BufferedReader br = null; // buffered for readLine()
         try {
             String s;
-            ins = new FileInputStream("C:\\Users\\Felipe\\IdeaProjects\\LetsCode\\src\\Aula10_POO\\Ascii\\ascii_orc.txt");
+            ins = new FileInputStream("C:\\Users\\Felipe\\IdeaProjects\\LetsCode\\src\\Aula10_POO\\Ascii\\ascii_mage.txt");
             r = new InputStreamReader(ins, "UTF-8"); // leave charset out for default
             br = new BufferedReader(r);
             while ((s = br.readLine()) != null) {
@@ -242,17 +253,17 @@ public class HeroiBarbaro extends HeroiGenerico {
             if (ins != null) { try { ins.close(); } catch(Throwable t) { /* ensure close happens */ } }
         }
 
-        System.out.println("Você decidiu cedo na vida que não há nenhum problema que seus bíceps gigantes não possam resolver.\nAfinal, todo mundo que você já enfrentou tinha  um plano até você enfiar um soco na cara deles.");
-        System.out.println("Você tem maior vitalidade e causa maior dano, além de não poder ser atordoado, já que não tem muito na cabeça para poder atordoar.");
+        System.out.println("O mundo está a beira da destruição...você poderia criar outro mundo ou pular de dimensão, mas, honestamente, você acha que isso seria mais trabalhoso do que simplesmente destruir todos os monstros e salvar o mundo.");
+        System.out.println("Você é velho e fraco, mas seu conhecimento da magia e poder são inigualáveis.");
 
     }
 
 
     @Override
     public String toString() {
-        return "Orc Barbaro{" +
-                "\nPontos de Vida=" + hitPoints +"/300"+
-                "\nMana=" + magicPoints+"/50"+
+        return "Mago Humano{" +
+                "\nPontos de Vida=" + hitPoints +"/120"+
+                "\nMana=" + magicPoints+"/200"+
                 "\nQuantidade de dano=" + dano +
                 "\nTipo de Dano='" + tipoDano + '\'' +
                 "\nElemento =" + elementoDano +

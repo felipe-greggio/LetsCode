@@ -79,15 +79,19 @@ public class Jogo {
             switch (opcao){
                 case 1:
                     heroi.setElementoDano("FOGO");
+                    System.out.println("Seus punhos são imbuídos com o elemento do fogo, seus punhos flamejam com poder. \nVocê agora causa dano de fogo.");
                     break;
                 case 2:
                     heroi.setElementoDano("AGUA");
+                    System.out.println("Sua arma é imbuída com o elemento da água, você não tem certeza do que aconteceu, mas sua arma parece ter ficado mais calma e estável, assim como sua mente.");
                     break;
                 case 3:
                     heroi.setElementoDano("TERRA");
+                    System.out.println("Sua arma é imbuída com o elemento da terra, você sente a densidade da arma aumentar consideravelmente...mas ao mesmo tempo ela ter ficado mais leve para você manusear.\nVocê agora causa dano de pancada.");
                     break;
                 case 4:
                     heroi.setElementoDano("AR");
+                    System.out.println("Sua arma é imbuída com o elemento do ar, você fica impressionado conforme manuseia a lâmina. \nVocê agora causa dano perfurante.");
                     break;
                 default:
                     System.out.println("Opção inválida, tente novamente.");
@@ -112,12 +116,10 @@ public class Jogo {
 
                     break;
                 case 2:
-                    heroi = new HeroiBarbaro();
-                    //return new HeroiMago();
+                    heroi = new HeroiMago();
                     break;
                 case 3:
-                    heroi = new HeroiBarbaro();
-                    //return new HeroiArqueira();
+                    heroi = new HeroiArqueiro();
                     break;
                 default:
                     System.out.println("Opção inválida, tente novamente.");
@@ -227,6 +229,7 @@ public class Jogo {
                     heroi.meditar();
                     break;
                 case 2:
+                    System.out.println("Você decide que não está com sono e prefere explorar um pouco.");
                     Jogo.evento(heroi);
                     break;
                 default:
@@ -238,26 +241,76 @@ public class Jogo {
     }
 
     public static void evento(HeroiGenerico heroi){
-        List<String> listaEventos = new ArrayList<>(Arrays.asList("Fonte", "Cálice", "Criatura", "Herói Desconhecido"));
+        List<String> listaEventos = new ArrayList<>(Arrays.asList("Fonte", "Cálice", "Criatura", "Derrotado"));
         int qualEvento = 0;
         qualEvento = random.nextInt(listaEventos.size());
+        scan.nextLine();
         String evento = listaEventos.remove(qualEvento);
         if (evento.equals("Fonte")){
             Jogo.eventoFonte(heroi);
-
         }else if (evento.equals("Cálice")){
-            Jogo.eventoFonte(heroi);
+            Jogo.eventoCalice(heroi);
         }else if (evento.equals("Criatura")){
-            Jogo.eventoFonte(heroi);
+            Jogo.eventoCriatura(heroi);
         }else{
-
+                Jogo.eventoDerrotado(heroi);
         }
     }
 
     public static void eventoFonte(HeroiGenerico heroi){
-        System.out.println("Você encontra uma fonte mágica, você se sente estranhamente atraído por ela");
-        System.out.println("Você bebe da fonte e se sente rejuvesnecido, pronto para outra batalha.\nVocê recuperou toda sua vida e mana, bem como você limpa todas suas condições negativas");
-        heroi.recuperarCompletamente();
+        System.out.println("Você encontra uma fonte mágica, você se sente estranhamente atraído por ela.....");
+        apertarTecla();
+        int chanceEnvenenada=0;
+        chanceEnvenenada = random.nextInt(10);
+        if (chanceEnvenenada <3){
+            System.out.println("Ao beber o primeiro gole, você percebe que algo está errado. Os monstros devem ter envenenado a fonte, você se sente extremamente fraco.\nVocê está severamente envenenado");
+            heroi.setEnvenenado(true);
+            heroi.setContadorEnvenenado(6);
+        }
+        else{
+            System.out.println("Você bebe da fonte e se sente rejuvesnecido, pronto para outra batalha.\nVocê recuperou toda sua vida e mana, bem como você limpa todas suas condições negativas");
+            heroi.recuperarCompletamente();
+        }
+        apertarTecla();
+    }
+    public static void eventoCalice(HeroiGenerico heroi){
+        System.out.println("Você encontra um cálice de ouro, você não tem certeza se há alguma utilidade imediata para isso, mas decide pegar ele para você de qualquer forma. Afinal, ele ainda é feito de ouro.");
+    }
+
+
+    public static void eventoCriatura(HeroiGenerico heroi){
+        List<Generico> listaMonstros = new ArrayList<>();
+
+        Generico generico = new Generico();
+        Generico cobra = new Cobra();
+        Generico gigante = new Gigante();
+
+        listaMonstros.add(generico);
+        listaMonstros.add(cobra);
+        listaMonstros.add(gigante);
+
+        int monstroEscolhido = 0;
+
+        System.out.println("Se esgueirando pelo escuro, você tromba diretamente com um monstro. Que azar!");
+        apertarTecla();
+        monstroEscolhido = random.nextInt(3);
+        Jogo.batalha(heroi, listaMonstros.get(monstroEscolhido));
+    }
+
+    public static void eventoDerrotado(HeroiGenerico heroi){
+        System.out.println("Na distância, você avista um humano sentado ao lado da parede. Você corre para encontrar este potencial amigo.");
+        System.out.println("No entanto, ao se aproximar, você percebe que a razão de ele estar tão imóvel é a existência de um buraco gigante em seu peito.\nEle não é nada mais do que um corpo sem vida agora, mas...em algum momento ele estava na mesma posição que você.");
+        apertarTecla();
+        int chanceEspada=0;
+        chanceEspada = random.nextInt(2);
+        if (chanceEspada == 0){
+            System.out.println("Você observa que a arma que este defunto herói carregava é melhor do que a sua. Você pergunta se pode levar a arma dele com você, já que ele não está usando, mas o corpo não responde. \"Quem cala consente\", você pensa enquanto se serve do equipamento alheio.\nSeu dano aumentou com sua nova arma");
+            heroi.aumentarDano();
+        }
+        else{
+            System.out.println("É má sorte ficar perto deste herói infeliz, você vai embora refletindo sobre como é bom estar vivo.");
+        }
+
     }
 
     public static void apertarTecla(){
