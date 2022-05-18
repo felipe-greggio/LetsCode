@@ -1,4 +1,4 @@
-package Aula04_POO;
+package Aula10_POO;
 
 import java.util.Random;
 
@@ -25,20 +25,20 @@ public class Generico extends Monstro{
     }
 
     @Override
-    public void ataque(Jogador jogador){
+    public void ataque(HeroiGenerico heroi){
         System.out.println("O monstro lhe causou 10 de dano.");
-        jogador.sofrerDano(10);
+        heroi.sofrerDano(10);
     }
 
     @Override
-       public void apanhar(Jogador jogador) {
-        int dano = jogador.getDano() - random.nextInt(39);
-        System.out.println("O monstro recebeu "+dano+" de dano.");
+       public void apanhar(HeroiGenerico heroi) {
+        int dano = heroi.getDano() - random.nextInt(39);
+        System.out.println("O monstro recebeu "+dano+" pontos de dano.");
         this.hitPoints = this.hitPoints-dano;
         if (this.hitPoints<=0){
             System.out.println("Com um rápido golpe de sua arma, você degola este monstro sem compreender de fato o que ele era. \nVocê derrotou o monstro e continua em sua aventura");
             this.vivo = false;
-            jogador.incrementarMonstrosDerrotados();
+            heroi.incrementarMonstrosDerrotados();
         }
         else{
             System.out.println("Ele ainda tem "+this.hitPoints+" pontos de vida");
@@ -51,7 +51,7 @@ public class Generico extends Monstro{
         System.out.println("Você pergunta ao monstro o que ele é exatamente, mas ele não parece gostar. \"Por que eu responderia meu inimigo???\"");
     }
 
-    public void desenharMonstro(){
+    public void apresentarMonstro(){
         System.out.println(
                 "                   (    )\n" +
                 "                  ((((()))\n" +
@@ -76,6 +76,11 @@ public class Generico extends Monstro{
                 "                            / /\n" +
                 "                          _/,/'\n" +
                 "                        /,/,\"");
+
+
+        System.out.println();
+        System.out.println("Você se depara com um monstro, você não entende exatamente o que ele é, mas parece razoavelmente fraco.");
+        Jogo.apertarTecla();
     }
 
 

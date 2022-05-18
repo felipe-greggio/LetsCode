@@ -1,6 +1,5 @@
-package Aula04_POO;
+package Aula10_POO;
 
-import java.sql.SQLOutput;
 import java.util.Random;
 
 public class Vampiro extends Generico{
@@ -14,29 +13,29 @@ public class Vampiro extends Generico{
     }
 
 
-    public void ataque(Jogador jogador) {
+    public void ataque(HeroiGenerico heroi) {
         int chanceSangramento = 0;
-        System.out.println("O monstro lhe causou 20 de dano.");
-        jogador.sofrerDano(20);
+        System.out.println("O vampiro lhe causou 20 de dano.");
+        heroi.sofrerDano(20);
         chanceSangramento = random.nextInt(100);
-        if(chanceSangramento>=50 && jogador.isSangrando()==false){
+        if(chanceSangramento>=50 && heroi.isSangrando()==false){
             System.out.println("O vampiro lhe corta a jugular, você sente algo quente escorrendo por sua armadura. \nVocê está sangrando");
-            jogador.setSangrando(true);
-            jogador.setContadorSangrando(3);
+            heroi.setSangrando(true);
+            heroi.setContadorSangrando(3);
         }
     }
 
 
-    public void apanhar(Jogador jogador) {
-        int dano = jogador.getDano() - random.nextInt(39);
-        if(jogador.getTipoDano().equals("Perfurante"))
+    public void apanhar(HeroiGenerico heroi) {
+        int dano = heroi.getDano() - random.nextInt(39);
+        if(heroi.getTipoDano().equals("Perfurante"))
             dano = dano*2;
-        System.out.println("O monstro recebeu "+dano+" de dano.");
+        System.out.println("O monstro recebeu "+dano+" pontos de dano.");
         this.hitPoints = this.hitPoints-dano;
         if (this.hitPoints<=0){
-            System.out.println("Com um rápido golpe de sua arma, você degola o vampiro, sangue se espalha por seu rosto. \nVocê derrotou o vampiro e continua a explorar");
+            System.out.println("Com um rápido golpe de sua arma, você degola o vampiro, sangue se espalha por seu rosto. \nVocê derrotou o vampiro");
             this.vivo = false;
-            jogador.incrementarMonstrosDerrotados();
+            heroi.incrementarMonstrosDerrotados();
         }
         else{
             System.out.println("Ele ainda tem "+this.hitPoints+" pontos de vida");
@@ -50,7 +49,7 @@ public class Vampiro extends Generico{
     }
 
     @Override
-    public void desenharMonstro() {
+    public void apresentarMonstro() {
         System.out.println(
                 "                           _.-.\n" +
                 "                       ._.-.\\\n" +
@@ -90,5 +89,8 @@ public class Vampiro extends Generico{
                 "            / / / ._`. \\.'-. \\`/\n" +
                 "            |/ / /  `'  `  |/|/\n" +
                 "             \\|\\|");
+        System.out.println();
+        System.out.println("Indo em frente, você encontra o último monstro, o chefe de todos. Um vampiro sugador de sangue!");
+        Jogo.apertarTecla();
     }
 }
