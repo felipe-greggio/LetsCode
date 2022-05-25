@@ -48,7 +48,7 @@ public class Master {
                     number1 = scan.nextDouble();
                     System.out.println("Second Number:");
                     number2 = scan.nextDouble();
-                    System.out.println("Result = "+git division.execute(number1,number2));
+                    System.out.println("Result = "+division.execute(number1,number2));
                     break;
                 default:
                     break;
